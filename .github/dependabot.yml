@@ -6,13 +6,21 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      dependencies:
+        patterns:
+          - "*"
 
   # Maintain dependencies for Python (FastAPI/ML)
   - package-ecosystem: "pip"
-    directory: "/ml_service" # Assuming this is where requirements.txt or Pipfile is, adjust if needed.
+    directory: "/ml_service"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      python-dependencies:
+        patterns:
+          - "*"
 
   # Maintain GitHub Actions dependencies
   - package-ecosystem: "github-actions"
@@ -20,3 +28,7 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    groups:
+      actions:
+        patterns:
+          - "*"
