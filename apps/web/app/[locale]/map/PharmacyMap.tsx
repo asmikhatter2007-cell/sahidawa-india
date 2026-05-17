@@ -314,13 +314,16 @@ export default function PharmacyMap({
                 maxWidth: 300,
             });
 
-            marker.on("mouseover", () => {
-                marker.openPopup();
-                marker.getElement()?.classList.add("sahidawa-marker-hover");
-            });
-            marker.on("mouseout", () => {
-                marker.getElement()?.classList.remove("sahidawa-marker-hover");
-            });
+            if (window.matchMedia("(pointer: fine)").matches) {
+                marker.on("mouseover", () => {
+                    marker.openPopup();
+                    marker.getElement()?.classList.add("sahidawa-marker-hover");
+                });
+                marker.on("mouseout", () => {
+                    marker.closePopup();
+                    marker.getElement()?.classList.remove("sahidawa-marker-hover");
+                });
+            }
         });
 
         // Fit map to show all pharmacies (only if autoFitBounds is enabled)
