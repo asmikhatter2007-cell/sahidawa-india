@@ -899,32 +899,27 @@ export default function ScanPage() {
         }
     };
 
-   const handleBarcodeScan = (scannedText: string) => {
-    // --- TEMPORARY TEST LOGIC ---
+
+   // 1. Add 'async' right before (scannedText
+  const handleBarcodeScan = async (scannedText: string) => { 
+    // 2. Keep these two lines to start the loader
     setIsVerifying(true);
     setApiError(null);
 
-    // Fake a 3-second network delay to see the skeleton loader
-    setTimeout(() => {
+    try {
+      // 3. PUT YOUR UNCOMMENTED REAL CODE HERE
+      // (It will look something like this)
+      await handleVerify(scannedText); 
       
-      // TEST 1: Simulate an Error (Leave this uncommented first)
+    } catch (error: any) {
+      // 4. If the real database fails, show the error screen
+      setApiError(error.message || "Failed to verify medicine with CDSCO.");
+    } finally {
+      // 5. Always turn off the loader when it finishes
       setIsVerifying(false);
-      setApiError("Network failure: Could not connect to the CDSCO Database.");
-
-      // TEST 2: Simulate a Success (Comment out Test 1 and uncomment this to test success)
-      // setIsVerifying(false);
-      // alert(`Successfully verified medicine: ${scannedText}`);
-
-    }, 3000); 
-
-    /* --- COMMENT OUT THE REAL LOGIC FOR NOW ---
-    // try {
-    //   ... existing real API calls ...
-    // } catch (e) {
-    //   ...
-    // }
-    ------------------------------------------ */
+    }
   };
+  
 
     const handleScanAgain = async () => {
         if (ocrWorkerRef.current) {
