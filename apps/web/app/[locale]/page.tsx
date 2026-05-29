@@ -18,6 +18,7 @@ import {
     MessageCircle,
 } from "lucide-react";
 
+import { Syringe, ArrowRight } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
@@ -204,6 +205,33 @@ export default function SahiDawaHome() {
                         className="relative z-10 hidden shrink-0 text-emerald-200 opacity-50 transition-all group-hover:translate-x-2 group-hover:opacity-100 sm:block"
                     />
                 </button>
+
+
+<Link
+  href="/Vaccine-Hub"
+  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
+>
+  <div>
+    {/* Icon Container */}
+    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white">
+      <Syringe size={24} />
+    </div>
+
+    {/* Text Context */}
+    <h3 className="mt-4 text-lg font-bold text-slate-900">
+      Vaccine Hub & Tracker
+    </h3>
+    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+      Check customized national immunization schedules, view critical side effects, and track milestone execution timelines.
+    </p>
+  </div>
+
+  {/* Action Footer Indicator */}
+  <div className="mt-6 flex items-center gap-1.5 text-sm font-bold text-emerald-600">
+    <span>Open Tracker</span>
+    <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+  </div>
+</Link>
 
                 {/* ── Secondary Action Cards ── */}
                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">

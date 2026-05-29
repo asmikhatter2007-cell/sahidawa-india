@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Globe, Zap } from "lucide-react";
+import { ArrowLeft, Globe, Zap, Syringe } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
 const pageHeaderFocusRingClass =
@@ -32,6 +32,7 @@ export const PageHeader = ({
             className={`no-print ${isDark ? "absolute top-0 right-0 left-0 bg-gradient-to-b from-black/70 to-transparent text-white" : "relative border-b border-slate-100 bg-white text-slate-900 shadow-sm"} z-50 flex flex-col gap-4 p-4`}
         >
             <div className="flex items-center justify-between gap-2">
+                {/* BACK BUTTON */}
                 <Link
                     href={backHref}
                     aria-label="Go back to previous page"
@@ -49,6 +50,7 @@ export const PageHeader = ({
                     <span className="sr-only">Go back</span>
                 </Link>
 
+                {/* MAIN HEADER TITLE / RUNTIME CHILDREN */}
                 {children ? (
                     <div className="min-w-0 flex-1">{children}</div>
                 ) : (
@@ -64,7 +66,24 @@ export const PageHeader = ({
                     </div>
                 )}
 
-                <div className="flex shrink-0 items-center justify-end">
+                {/* RIGHT ACTIONS BLOCK (Features & Utilities) */}
+                <div className="flex shrink-0 items-center justify-end gap-2">
+                    
+                    {/* NEW VACCINE HUB LINK COMPONENT */}
+                    <Link
+                        href="/Vaccine-Hub"
+                        aria-label="Navigate to Immunization Vaccine Hub"
+                        className={`flex h-10 px-3 items-center justify-center gap-1.5 rounded-full font-semibold text-xs transition-all ${pageHeaderFocusRingClass} ${
+                            isDark 
+                                ? "bg-emerald-600/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-600/40" 
+                                : "bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100"
+                        }`}
+                    >
+                        <Syringe size={16} aria-hidden="true" />
+                        <span className="hidden sm:inline">Vaccine Hub</span>
+                    </Link>
+
+                    {/* STATUS OR QUICK ACTIONS CONTAINER */}
                     {showLanguage ? (
                         <div
                             className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm"
@@ -86,7 +105,7 @@ export const PageHeader = ({
                             <span className="sr-only">Quick actions</span>
                         </button>
                     ) : (
-                        <div className="w-10" />
+                        <div className="w-2" />
                     )}
                 </div>
             </div>
