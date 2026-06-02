@@ -45,35 +45,6 @@ reportsRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Res
 
   const data = parsed.data;
 
-<<<<<<< Updated upstream
-  const { data: report, error } = await supabase
-    .from('counterfeit_reports')
-    .insert({
-      reported_brand_name: data.medicineName,
-      manufacturer: data.manufacturer,
-      description: data.description,
-      photo_url: data.images[0],
-      photo_urls: data.images,
-      pharmacy_name: data.pharmacyName,
-      address: data.address,
-      city: data.city,
-      state: data.state,
-      pincode: data.pincode,
-      district: data.city,
-      report_location: buildReportLocation(data.latitude, data.longitude),
-      reporter_id: req.user?.id ?? null,
-      status: 'pending',
-    })
-    .select()
-    .single();
-
-  if (error) {
-    res.status(500).json({ error: 'Failed to submit counterfeit report' });
-    return;
-  }
-
-  res.status(201).json({ report });
-=======
     try {
         const { data: report, error } = await supabase
             .from("counterfeit_reports")
@@ -106,7 +77,6 @@ reportsRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Res
         console.error("Unexpected error in POST /api/reports:", err);
         res.status(500).json({ error: "An unexpected error occurred" });
     }
->>>>>>> Stashed changes
 });
 
 // Must be registered BEFORE the admin-only GET '/' so Express matches /mine first.
@@ -117,34 +87,6 @@ reportsRouter.get('/mine', requireAuth, async (req: AuthenticatedRequest, res: R
     return;
   }
 
-<<<<<<< Updated upstream
-  const { data, error } = await supabase
-    .from('counterfeit_reports')
-    .select('id, reported_brand_name, scanned_barcode, photo_url, district, status, created_at')
-    .eq('reporter_id', userId)
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    res.status(500).json({ error: 'Failed to fetch your reports' });
-    return;
-  }
-
-  res.json({ reports: data ?? [] });
-});
-
-reportsRouter.get('/', requireAuth, requireRole('admin'), async (_req, res: Response) => {
-  const { data, error } = await supabase
-    .from('counterfeit_reports')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    res.status(500).json({ error: 'Failed to fetch counterfeit reports' });
-    return;
-  }
-
-  res.json({ reports: data });
-=======
     try {
         const { data, error } = await supabase
             .from("counterfeit_reports")
@@ -181,7 +123,6 @@ reportsRouter.get("/", requireAuth, requireRole("admin"), async (_req, res: Resp
         console.error("Unexpected error in GET /api/reports:", err);
         res.status(500).json({ error: "An unexpected error occurred" });
     }
->>>>>>> Stashed changes
 });
 
 reportsRouter.patch('/:id/status', requireAuth, requireRole('admin'), async (req, res: Response) => {
@@ -193,22 +134,6 @@ reportsRouter.patch('/:id/status', requireAuth, requireRole('admin'), async (req
     return;
   }
 
-<<<<<<< Updated upstream
-  const { data, error } = await supabase
-    .from('counterfeit_reports')
-    .update({ status })
-    .eq('id', req.params.id)
-    .select()
-    .single();
-
-  if (error) {
-    res.status(500).json({ error: 'Failed to update report status' });
-    return;
-  }
-
-  res.json({ report: data });
-});
-=======
         try {
             const { data, error } = await supabase
                 .from("counterfeit_reports")
@@ -229,6 +154,5 @@ reportsRouter.patch('/:id/status', requireAuth, requireRole('admin'), async (req
         }
     }
 );
->>>>>>> Stashed changes
 
 export default reportsRouter;
