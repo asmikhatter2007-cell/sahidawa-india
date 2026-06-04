@@ -167,18 +167,24 @@ app.get("/health", async (_req: Request, res: Response) => {
         };
 
         if (error) {
+            logger.error("Health check database failure", { error });
             return res.status(503).json({
                 ...healthData,
-                database: { status: "unreachable", error: error.message },
+                database: {
+                    status: "unreachable",
+                    error: "Database connection failed",
+                },
             });
         }
 
         return res.status(200).json(healthData);
     } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
+        logger.error("Health check error", { error: err, errorMessage });
         return res.status(500).json({
             status: "error",
             service: "sahidawa-api",
-            error: err instanceof Error ? err.message : "Unknown error",
+            error: "Service health check failed",
             timestamp: new Date().toISOString(),
         });
     }
